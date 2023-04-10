@@ -1,6 +1,5 @@
 $blue__color: #6b7fd7;
-$text__info: "Dear Dreamer.ttf";
-$text__btn: "Boba Cups.ttf";
+$text: "Boba Cups.ttf";
 
 *body {
     margin: 0;
@@ -9,11 +8,6 @@ $text__btn: "Boba Cups.ttf";
 @font-face {
     font-family: "Boba Cups.ttf";
     src: url('./assets/fonts/Boba\ Cups.ttf');
-}
-
-@font-face {
-    font-family: "Dear Dreamer.ttf";
-    src: url('./assets/fonts/Dear\ Dreamer.ttf');
 }
 
 .main__btn__style {
@@ -31,12 +25,11 @@ $text__btn: "Boba Cups.ttf";
     opacity: 0.8;
 }
 
-.text__btn {
-    font-family: $text__btn;
+.text {
+    font-family: $text;
     font-size: medium;
 }
 
-.text__info {
-    font-family: $text__info;
-    font-size: 48px;
+.text__error {
+    color: red;
 }

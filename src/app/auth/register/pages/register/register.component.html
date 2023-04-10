@@ -1,1 +1,63 @@
-<p>register works!</p>
+<div class="register__distribution">
+    <div>
+        <div class="main__info">
+            <img src="../../../../assets/media/logo-wallet.png" class="logo__wallet">
+            <p class="main__title text">My crypto wallet</p>
+        </div>
+
+        <form autocomplete="off" [formGroup]="registerForm" (ngSubmit)="newUser()" class="register__form">
+            <!-- USERNAME -->
+            <mat-form-field appearance="fill">
+                <mat-label class="text">Nombre de usuario</mat-label>
+                <input matInput type="text" formControlName="username" class="form-control" [class]="isValidField('username')" required>
+                <div *ngIf="!registerForm.get('username')?.valid" class="invalid-feedback">
+                    <div *ngIf="registerForm.get('username')?.hasError('minlength')" class="text text__error">
+                        Debe tener 4 o más caracteres
+                    </div>
+                </div>
+            </mat-form-field>
+
+            <!-- FULLNAME -->
+            <mat-form-field appearance="fill">
+                <mat-label class="text">Nombre completo</mat-label>
+                <input matInput type="text" formControlName="fullname" class="form-control"  required>
+            </mat-form-field>
+
+            <!-- PASSWORD -->
+            <mat-form-field appearance="fill">
+                <mat-label class="text">Clave</mat-label>
+                <input matInput type="password" formControlName="password" class="form-control" [class]="isValidField('password')" required>
+                <div *ngIf="!registerForm.get('password')?.valid" class="invalid-feedback">
+                    <div *ngIf="registerForm.get('password')?.hasError('minlength')" class="text text__error">
+                        Debe tener 6 o más caracteres
+                    </div>
+                </div>
+            </mat-form-field>
+
+            <!-- PASSWORD 2 -->
+            <mat-form-field appearance="fill">
+                <mat-label class="text">Repetir clave</mat-label>
+                <input matInput type="password" formControlName="confirmPassword" class="form-control" [class]="isValidField('confirmPassword')" required>
+                <div *ngIf="registerForm.get('confirmPassword')?.invalid" class="invalid-feedback">
+                    <div *ngIf="registerForm.get('confirmPassword')?.hasError" class="text text__error">
+                        Las claves deben coincidir
+                    </div>
+                </div>
+            </mat-form-field>
+
+            <!-- EMAIL -->
+            <mat-form-field appearance="fill">
+                <mat-label class="text">Email</mat-label>
+                <input matInput type="email" formControlName="email" class="form-control" required>
+            </mat-form-field>
+
+            <!-- DEPOSIT -->
+            <mat-form-field appearance="fill">
+                <mat-label class="text">Saldo inicial</mat-label>
+                <input matInput type="number" min="0" step="0.01" formControlName="deposit" class="form-control" required>
+            </mat-form-field>
+
+            <button type="submit" class="main__btn__style text">Registrarme</button>
+        </form>
+    </div>
+</div>
