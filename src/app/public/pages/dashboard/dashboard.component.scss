@@ -1,0 +1,32 @@
+.main__page__distribution {
+    height: 100vh;
+    background-image: url("../../../../assets/background-auth.png");
+    background-repeat: no-repeat, repeat;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main__title {
+    font-size: large;
+    width: 50%;
+    text-align: center;
+    margin-top: 16px;
+}
+
+.main__dashboard__btn {
+    margin-top: 48px;
+    display: flex;
+    justify-content: space-between;
+    gap: 100px;
+}
