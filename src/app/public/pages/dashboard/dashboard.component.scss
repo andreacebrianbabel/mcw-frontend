@@ -1,6 +1,6 @@
 .main__page__distribution {
     height: 100vh;
-    background-image: url("../../../../assets/background-auth.png");
+    background-image: url("../../../../assets/media/background-auth.png");
     background-repeat: no-repeat, repeat;
     background-position: center;
     background-size: cover;
@@ -8,6 +8,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.main__page__distribution div {
+    margin-left: 13%;
 }
 
 .main__info {
@@ -21,12 +25,13 @@
     font-size: large;
     width: 50%;
     text-align: center;
-    margin-top: 16px;
+    margin-top: 48px;
+    letter-spacing: 2px;
 }
 
 .main__dashboard__btn {
     margin-top: 48px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     gap: 100px;
 }

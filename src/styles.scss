@@ -1,4 +1,42 @@
-/* You can add global styles to this file, and also import other style files */
+$blue__color: #6b7fd7;
+$text__info: "Dear Dreamer.ttf";
+$text__btn: "Boba Cups.ttf";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+*body {
+    margin: 0;
+}
+
+@font-face {
+    font-family: "Boba Cups.ttf";
+    src: url('./assets/fonts/Boba\ Cups.ttf');
+}
+
+@font-face {
+    font-family: "Dear Dreamer.ttf";
+    src: url('./assets/fonts/Dear\ Dreamer.ttf');
+}
+
+.main__btn__style {
+    background-color: transparent;
+    border-color: $blue__color;
+    border-width: 3px;
+    border-radius: 15px;
+    padding: 16px;
+    width: 160px;
+    cursor: pointer;
+}
+
+.main__btn__style:hover {
+    background-color: #6b7fd7 ;
+    opacity: 0.8;
+}
+
+.text__btn {
+    font-family: $text__btn;
+    font-size: medium;
+}
+
+.text__info {
+    font-family: $text__info;
+    font-size: 48px;
+}
