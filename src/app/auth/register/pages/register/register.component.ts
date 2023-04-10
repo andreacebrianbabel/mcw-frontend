@@ -26,6 +26,7 @@ export class RegisterComponent implements OnInit {
       validator: this.matchingPassword("password", "confirmPassword")
     })
 
+
   matchingPassword(passwordControl: string, matchingPasswordControl: string) {
     return (formGroup: FormGroup) => {
       let control = formGroup.controls[passwordControl]
@@ -49,12 +50,10 @@ export class RegisterComponent implements OnInit {
   }
 
   newUser() {
-    if (this.registerForm.valid)
+    if (this.registerForm.valid) {
       console.log("nuevo usuario creado", this.registerForm.value)
-    else
+    } else {
       console.log("fallo al crear el nuevo usuario", this.registerForm.value)
+    }
   }
-
-
-
 }
