@@ -1,6 +1,8 @@
 <div class="results__page__distribution">
-    <div>
-        <app-navbar></app-navbar>
-        <app-table></app-table>
+    <app-navbar></app-navbar>
+    <app-table class="table__crypto"></app-table>
+    <div class="results__btn__distribution">
+        <button  (click)="openPurchaseDialog()" class="main__btn__style text">Comprar</button>
+        <button (click)="openSalesDialog()" class="main__btn__style text">Vender</button>
     </div>
 </div>

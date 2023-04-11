@@ -4,4 +4,21 @@
     background-repeat: no-repeat, repeat;
     background-position: center;
     background-size: cover;
+    display: flex;
+    flex-direction: column;
+}
+
+.table__crypto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+
+.results__btn__distribution {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+    margin-bottom: 150px;
 }

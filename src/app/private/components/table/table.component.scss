@@ -1,0 +1,13 @@
+.text {
+    font-size: 16px !important;
+    letter-spacing: 1px;
+}
+
+::ng-deep .mat-table, .mat-paginator {
+    background: linear-gradient(90deg, rgba(255, 145, 77, 1) 7%, rgba(140, 82, 255, 1) 81%) !important;
+    opacity: 0.9 !important;
+}
+
+.table__data {
+    padding-right: 50px !important;
+}

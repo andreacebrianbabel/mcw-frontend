@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ResultsService } from 'src/app/public/services/results.service';
+import { ResultsService } from 'src/app/private/services/results.service';
 
 @Component({
   selector: 'app-navbar',
