@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
 
   redirection(userLog: User) {
     if (this.userLog) {
-      // this.router.navigate(['/results'])
+      this.router.navigate(['/private/results'])
     } else {
       this.router.navigate(['/auth/register'])
     }
