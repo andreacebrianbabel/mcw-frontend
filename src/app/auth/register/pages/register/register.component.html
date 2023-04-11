@@ -6,7 +6,6 @@
         </div>
 
         <form autocomplete="off" [formGroup]="registerForm" (ngSubmit)="newUser()" class="register__form">
-            <!-- USERNAME -->
             <mat-form-field appearance="fill">
                 <mat-label class="text">Nombre de usuario</mat-label>
                 <input matInput type="text" formControlName="username" class="form-control" [class]="isValidField('username')" required>
@@ -17,13 +16,11 @@
                 </div>
             </mat-form-field>
 
-            <!-- FULLNAME -->
             <mat-form-field appearance="fill">
                 <mat-label class="text">Nombre completo</mat-label>
                 <input matInput type="text" formControlName="fullname" class="form-control"  required>
             </mat-form-field>
 
-            <!-- PASSWORD -->
             <mat-form-field appearance="fill">
                 <mat-label class="text">Clave</mat-label>
                 <input matInput type="password" formControlName="password" class="form-control" [class]="isValidField('password')" required>
@@ -34,7 +31,6 @@
                 </div>
             </mat-form-field>
 
-            <!-- PASSWORD 2 -->
             <mat-form-field appearance="fill">
                 <mat-label class="text">Repetir clave</mat-label>
                 <input matInput type="password" formControlName="confirmPassword" class="form-control" [class]="isValidField('confirmPassword')" required>
@@ -45,13 +41,11 @@
                 </div>
             </mat-form-field>
 
-            <!-- EMAIL -->
             <mat-form-field appearance="fill">
                 <mat-label class="text">Email</mat-label>
                 <input matInput type="email" formControlName="email" class="form-control" required>
             </mat-form-field>
 
-            <!-- DEPOSIT -->
             <mat-form-field appearance="fill">
                 <mat-label class="text">Saldo inicial</mat-label>
                 <input matInput type="number" min="0" step="0.01" formControlName="deposit" class="form-control" required>

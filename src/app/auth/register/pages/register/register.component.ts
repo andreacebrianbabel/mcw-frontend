@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { RegisterService } from '../../services/register.service';
+import { User } from 'src/app/auth/models/user-model';
 
 @Component({
   selector: 'app-register',
@@ -8,11 +10,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  userRegister!: User
 
-  constructor(private router: Router, private fb: FormBuilder) { }
-
-  ngOnInit(): void {
-  }
+  constructor(private router: Router, private fb: FormBuilder, private registerService: RegisterService) { }
 
   public registerForm = this.fb.group({
     username: ['', Validators.minLength(3)],
@@ -51,9 +51,24 @@ export class RegisterComponent implements OnInit {
 
   newUser() {
     if (this.registerForm.valid) {
-      console.log("nuevo usuario creado", this.registerForm.value)
-    } else {
-      console.log("fallo al crear el nuevo usuario", this.registerForm.value)
+      console.log(this.registerForm.value)
+
+      this.registerService.addNewUser(this.registerForm.value).subscribe(
+        (user) => {
+          this.redirection(this.userRegister)
+        },
+        (error) => {
+          console.log(error)
+        }
+      )
     }
+  }
+
+  redirection(userRegister: User) {
+    if (this.userRegister)
+      this.router.navigate(['/auth/login'])
+  }
+  
+  ngOnInit(): void {
   }
 }

@@ -1,0 +1,43 @@
+.login__distribution {
+    height: 100vh;
+    background-image: url("../../../../../assets/media/background-register.png");
+    background-repeat: no-repeat, repeat;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+p {
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.logo__wallet {
+    width: 80px;
+}
+
+.main__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
+}
+
+.main__btn__style {
+    margin-top: 16px;
+}
+
+.text {
+    font-size: 14px;
+}

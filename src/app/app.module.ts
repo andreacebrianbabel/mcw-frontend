@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './auth/auth.module';
 import { PrivateModule } from './private/private.module';
 import { PublicModule } from './public/public.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { PublicModule } from './public/public.module';
     BrowserAnimationsModule,
     AuthModule,
     PrivateModule,
-    PublicModule
+    PublicModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
