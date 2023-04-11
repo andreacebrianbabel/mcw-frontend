@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ResultsService } from 'src/app/public/services/results.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +8,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private resultService: ResultsService) { }
 
   ngOnInit(): void {
+    this.getUserDeposit()
   }
 
+  getFullname = sessionStorage.getItem('username');
+  sessionUserId = sessionStorage.getItem('user_id');
+  deposit: string;
+
+  getUserDeposit() {
+    this.resultService.getUserById(this.sessionUserId!).subscribe(
+      (user) => {
+        console.log(user.deposit)
+        this.deposit = user.deposit
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+    return
+  }
 }

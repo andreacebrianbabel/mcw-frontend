@@ -8,12 +8,12 @@
 
         <div class="user__money">
             <img src="../../../../assets/media/user-money.png" class="icon__money">
-            <p class="text">Saldo disponible: <span>45.36 €</span></p>
+            <p class="text">Saldo disponible: <span [(ngModel)]='deposit' ngDefaultControl>{{deposit}} €</span></p>
         </div>
 
         <div class="user__profile">
             <img src="../../../../assets/media/user-icon.svg" class="icon__user">
-            <p class="text">Hola, <span>Andrea Cebrian</span></p>
+            <p class="text">Hola, <span [(ngModel)]='getFullname' ngDefaultControl>{{getFullname}}</span></p>
         </div>
 
     </mat-toolbar>

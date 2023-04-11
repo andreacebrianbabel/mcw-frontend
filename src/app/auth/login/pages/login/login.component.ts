@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     this.loginService.getUserLog(this.loginForm.value).subscribe(
       (user) => {
         this.userLog = user;
-        sessionStorage.setItem('name', this.loginForm.get('username')?.value)
+        sessionStorage.setItem('username', this.loginForm.get('username')?.value)
         sessionStorage.setItem('user_id', this.userLog.user_id)
 
         console.log("usuario logeado", user)
