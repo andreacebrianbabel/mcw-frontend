@@ -13,6 +13,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { PurchaseDialogComponent } from '../../components/purchase-dialog/purchase-dialog.component';
 import { SalesDialogComponent } from '../../components/sales-dialog/sales-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -22,7 +25,6 @@ import { SalesDialogComponent } from '../../components/sales-dialog/sales-dialog
   imports: [
     CommonModule,
     MatToolbarModule,
-    FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -31,7 +33,10 @@ import { SalesDialogComponent } from '../../components/sales-dialog/sales-dialog
     ReactiveFormsModule,
     MatInputModule,
     FormsModule,
-    MatSortModule
+    MatSortModule,
+    MatDialogModule,
+    MatSelectModule,
+    MatSnackBarModule
   ],
   exports: [
     ResultsComponent

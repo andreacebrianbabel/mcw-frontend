@@ -21,7 +21,6 @@ export class NavbarComponent implements OnInit {
   getUserDeposit() {
     this.resultService.getUserById(this.sessionUserId!).subscribe(
       (user) => {
-        console.log(user.deposit)
         this.deposit = user.deposit
       },
       (error) => {
