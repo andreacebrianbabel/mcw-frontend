@@ -1,1 +1,25 @@
-<p>sales-dialog works!</p>
+<mat-dialog-content class="mat-typography">
+    <p class="text transaction__title">¡VENDE TUS CRIPTOMONEDAS!</p>
+
+    <form autocomplete="off" [formGroup]="cryptoSale" class="transaction__form">
+        <mat-form-field appearance="fill">
+            <mat-label class="text">Elige una criptomoneda</mat-label>
+            <mat-select formControlName="crypto" required>
+                <mat-option *ngFor="let crypto of cryptos" [value]="crypto" class="text">
+                    {{crypto.crypto_name}} - {{crypto.value}} €
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label class="text">Cantidad</mat-label>
+            <input matInput type="number" min="0" step="0.0001" formControlName="crypto_quantity" class="form-control" #crypto_quantity required>
+        </mat-form-field>
+
+        <div>
+            <p class="text">Total: <span class="text">{{totalSalePrice}} €</span></p>
+        </div>
+
+        <button type="submit" class="sales__btn__style text" (click)="openSaleBar()">Vender</button>
+    </form>
+</mat-dialog-content>

@@ -34,3 +34,29 @@ $text: "Boba Cups.ttf";
 .text__error {
     color: red;
 }
+.transaction__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+}
+
+.transaction__title {
+    margin-bottom: 24px;
+}
+
+.sales__btn__style {
+    background-color: transparent;
+    border-color: #F4B639 !important;
+    border-width: 3px;
+    border-radius: 15px;
+    padding: 16px;
+    width: 160px;
+    cursor: pointer;
+}
+
+.sales__btn__style:hover {
+    background-color: #F4B639 ;
+    opacity: 0.8;
+}
