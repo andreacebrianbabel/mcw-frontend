@@ -13,7 +13,13 @@ export class ResultsComponent implements OnInit {
 
   constructor(public dialog: MatDialog) { }
 
+  userId = ''
+  userIdSS = sessionStorage.getItem('user_id')
+
   ngOnInit(): void {
+    console.log(this.userId)
+    if (!!this.userIdSS)
+      this.userId = this.userIdSS
   }
 
   openPurchaseDialog() {

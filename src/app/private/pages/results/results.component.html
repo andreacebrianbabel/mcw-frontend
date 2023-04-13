@@ -1,7 +1,11 @@
 <div class="results__page__distribution">
-    <app-navbar></app-navbar>
-    <app-table class="table__crypto"></app-table>
-    <div class="results__btn__distribution">
+    <app-navbar *ngIf="!!userId"></app-navbar>
+
+    <app-table *ngIf="!!userId" class="table__crypto"></app-table>
+
+    <app-not-permission *ngIf="!userId"></app-not-permission>
+    
+    <div *ngIf="!!userId" class="results__btn__distribution">
         <button  (click)="openPurchaseDialog()" class="main__btn__style text">Comprar</button>
         <button (click)="openSalesDialog()" class="sales__btn__style text">Vender</button>
     </div>

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ResultsService } from 'src/app/private/services/results.service';
 
@@ -8,7 +9,7 @@ import { ResultsService } from 'src/app/private/services/results.service';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private resultService: ResultsService) { }
+  constructor(private resultService: ResultsService, public router: Router) { }
 
   ngOnInit(): void {
     this.getUserDeposit()
@@ -28,5 +29,10 @@ export class NavbarComponent implements OnInit {
       }
     )
     return
+  }
+
+  logOut() {
+    sessionStorage.clear()
+    this.router.navigate(['/'])
   }
 }

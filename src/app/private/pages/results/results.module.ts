@@ -16,11 +16,12 @@ import { SalesDialogComponent } from '../../components/sales-dialog/sales-dialog
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NotPermissionComponent } from 'src/app/public/pages/not-permission/not-permission.component';
 
 
 @NgModule({
   declarations: [
-    ResultsComponent, NavbarComponent, TableComponent, PurchaseDialogComponent, SalesDialogComponent
+    ResultsComponent, NavbarComponent, TableComponent, PurchaseDialogComponent, SalesDialogComponent, NotPermissionComponent
   ],
   imports: [
     CommonModule,

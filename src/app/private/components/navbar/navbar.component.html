@@ -14,6 +14,7 @@
         <div class="user__profile">
             <img src="../../../../assets/media/user-icon.svg" class="icon__user">
             <p class="text">Hola, <span [(ngModel)]='getFullname' ngDefaultControl>{{getFullname}}</span></p>
+            <a (click)="logOut()" class="logout__icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
         </div>
 
     </mat-toolbar>
