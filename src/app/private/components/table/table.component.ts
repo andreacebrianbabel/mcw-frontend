@@ -1,8 +1,8 @@
-import { Component, OnInit, Output, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { Component, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ResultsService } from 'src/app/private/services/results.service';
+import { ResultsService } from '../../services/results.service';
 
 export interface DataElement {
   crypto_name: string,
@@ -13,25 +13,26 @@ export interface DataElement {
 }
 
 const ELEMENT_DATA: DataElement[] = [];
+
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit {
+export class TableComponent {
   userCrypto!: DataElement
   displayedColumns: string[] = ['asset', 'crypto_name', 'value', 'stock', 'amount'];
 
   constructor(private resultsService: ResultsService) { }
 
-  dataSource: any
+  dataSource = new MatTableDataSource<DataElement>(ELEMENT_DATA);
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSortModule) matsort!: MatSortModule
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    this.dataSource.paginator._intl.itemsPerPageLabel =
-      'Criptomonedas por pagina'
+    console.log("en paginador", this.dataSource.data)
   }
 
   responseData: any;
@@ -47,22 +48,13 @@ export class TableComponent implements OnInit {
     )
   }
 
-
   ngOnInit(): void {
     var user_id = sessionStorage.getItem('user_id')
-
-    if (!!user_id)
-      this.chargeTableData(user_id!)
-
-    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+    this.chargeTableData(user_id!)
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.data.paginator) {
-      this.dataSource.data.paginator.firstPage();
-    }
   }
 }

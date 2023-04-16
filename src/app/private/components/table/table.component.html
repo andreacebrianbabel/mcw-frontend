@@ -1,42 +1,41 @@
 <mat-form-field>
     <mat-label class="text">Filtrar</mat-label>
-    <input matInput (keyup)="applyFilter($event)" #input class="text">
+    <input matInput (keyup)="applyFilter($event)" #input>
 </mat-form-field>
 
 <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource.data">
-        <ng-container matColumnDef="asset" >
-            <th mat-header-cell *matHeaderCellDef class="text table__data" > Siglas </th>
-            <td mat-cell *matCellDef="let row" class="text"> {{row.asset}} </td>
+    <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="asset">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text table__data"> Siglas </th>
+            <td mat-cell *matCellDef="let row" class="text table__data"> {{row.asset}} </td>
         </ng-container>
 
         <ng-container matColumnDef="crypto_name">
-            <th mat-header-cell *matHeaderCellDef class="text table__data"> Criptomoneda </th>
-            <td mat-cell *matCellDef="let row" class="text"> {{row.crypto_name}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text table__data"> Nombre de la criptomoneda </th>
+            <td mat-cell *matCellDef="let row" class="text table__data"> {{row.crypto_name}} </td>
         </ng-container>
 
         <ng-container matColumnDef="value">
-            <th mat-header-cell *matHeaderCellDef class="text table__data"> Valor </th>
-            <td mat-cell *matCellDef="let row" class="text"> {{row.value}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text table__data"> Valor </th>
+            <td mat-cell *matCellDef="let row" class="text table__data"> {{row.value}} </td>
         </ng-container>
 
         <ng-container matColumnDef="stock">
-            <th mat-header-cell *matHeaderCellDef class="text table__data"> Unidades disponibles </th>
-            <td mat-cell *matCellDef="let row" class="text"> {{row.stock}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text table__data"> Unidades disponibles </th>
+            <td mat-cell *matCellDef="let row" class="text table__data"> {{row.stock}} </td>
         </ng-container>
 
         <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef class="text table__data"> Unidades del usuario </th>
-            <td mat-cell *matCellDef="let row" class="text"> {{row.amount}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text table__data"> Unidades del usuario </th>
+            <td mat-cell *matCellDef="let row" class="text table__data"> {{row.amount}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
         <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="4" class="text">No se han encontrado resultados de "{{input.value}}"</td>
+            <td class="mat-cell text" colspan="4">No se han encontrado resultados de "{{input.value}}"</td>
         </tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of cryptos" class="text"></mat-paginator>
-</div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users" class="text"></mat-paginator>
