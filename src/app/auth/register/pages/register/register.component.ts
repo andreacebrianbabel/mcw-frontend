@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RegisterService } from '../../services/register.service';
@@ -13,6 +13,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class RegisterComponent implements OnInit {
   userRegister!: User
+  userExist: boolean = false
+  registeredEmail: string[]
+  emailCoincidence?: string
 
   constructor(private router: Router, private fb: FormBuilder, private registerService: RegisterService, private snackbar: MatSnackBar) { }
 
@@ -26,8 +29,8 @@ export class RegisterComponent implements OnInit {
   },
     {
       validator: this.matchingPassword("password", "confirmPassword")
-    })
-
+    }
+  )
 
   matchingPassword(passwordControl: string, matchingPasswordControl: string) {
     return (formGroup: FormGroup) => {
@@ -44,6 +47,23 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  userRegistered() {
+    this.registerService.getAllUsers().subscribe(
+      (user) => {
+        this.registeredEmail = user.map(element => element.email)
+
+        this.emailCoincidence = this.registeredEmail.find(element => element === this.registerForm.get('email')?.value)
+
+        if (!!this.emailCoincidence)
+          this.userExist = true
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+    return this.emailCoincidence
+  }
+
   isValidField(field: string): string {
     const validatedField = this.registerForm.get(field);
 
@@ -52,12 +72,18 @@ export class RegisterComponent implements OnInit {
   }
 
   newUser() {
-    if (this.registerForm.valid) {
-      console.log(this.registerForm.value)
+    this.userRegistered()
+    if (this.userExist == true) {
 
+      this.openUserCoincidenceBar()
+
+    } else if (this.registerForm.valid) {
       this.registerService.addNewUser(this.registerForm.value).subscribe(
         (user) => {
-          this.redirection(this.userRegister)
+          this.openRegisterBar()
+          setTimeout(() => {
+            this.router.navigate(['/auth/login'])
+          }, 3000)
         },
         (error) => {
           console.log(error)
@@ -66,16 +92,17 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  redirection(userRegister: User) {
-    if (!!this.userRegister)
-      this.router.navigate(['/auth/login'])
-  }
-  
   ngOnInit(): void {
   }
 
   openRegisterBar() {
     this.snackbar.open('El usuario se ha registrado exitosamente', '', {
+      duration: 2500
+    })
+  }
+
+  openUserCoincidenceBar() {
+    this.snackbar.open('Este usuario ya está regisrado', '', {
       duration: 2500
     })
   }
