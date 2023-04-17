@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ResultsService } from '../../services/results.service';
 
 export interface DataElement {
+  crypto_id?: string,
   crypto_name: string,
   value: number,
   asset: string,
@@ -32,7 +33,6 @@ export class TableComponent {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    console.log("en paginador", this.dataSource.data)
   }
 
   responseData: any;

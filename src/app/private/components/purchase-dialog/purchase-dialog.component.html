@@ -1,7 +1,7 @@
 <mat-dialog-content class="mat-typography">
     <p class="text transaction__title">¡COMPRA CRIPTOMONEDAS!</p>
 
-    <form autocomplete="off" [formGroup]="cryptoPurchase" class="transaction__form">
+    <form autocomplete="off" [formGroup]="cryptoPurchase" (ngSubmit)="transactionPurchase()" class="transaction__form">
         <mat-form-field appearance="fill">
             <mat-label class="text">Elige una criptomoneda</mat-label>
             <mat-select formControlName="crypto" required>

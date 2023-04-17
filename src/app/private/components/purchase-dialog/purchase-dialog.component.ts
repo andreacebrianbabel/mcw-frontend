@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { CryptoData } from '../../models/crypto-model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ResultsService } from '../../services/results.service';
+import { DataElement } from '../table/table.component';
 
 @Component({
   selector: 'app-purchase-dialog',
@@ -23,7 +24,11 @@ export class PurchaseDialogComponent implements OnInit {
   totalPurchasePrice: number
   userId = '0'
   userIdSS = sessionStorage.getItem('user_id')
-  newRelation: Relation
+  newRelation: Relation[]
+  cryptosOfUser: DataElement[]
+  matchingCryptos: object
+  quantityToPurchase: string
+  cryptoToPurchase: DataElement
 
   getAllCryptos() {
     this.resultsService.getAllCryptos().subscribe(
@@ -35,6 +40,43 @@ export class PurchaseDialogComponent implements OnInit {
       }
     )
   }
+
+  // Busco las criptomonedas que tiene el usuario y si la criptomoneda de compra coincide con alguna de las que ya tenía
+
+  getRelationById() {
+    this.resultsService.getRelationById(this.userId).subscribe(
+      (crypto) => {
+        this.cryptosOfUser = crypto
+        this.cryptoToPurchase = this.cryptoPurchase.get('crypto')?.value
+
+        this.matchingCryptos = this.cryptosOfUser.filter(element => element.crypto_name === this.cryptoToPurchase.crypto_name)
+
+        this.updateRelation()
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
+  updateRelation() {
+    let cryptoId = this.cryptoPurchase.get('crypto')?.value.crypto_id
+    let cryptoQuantity = this.cryptoPurchase.get('crypto_quantity')?.value
+
+    this.resultsService.updateRelationById(this.userId, cryptoId, cryptoQuantity).subscribe(
+      (relation) => {
+        console.log("prueba amount", relation)
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
+  transactionPurchase() {
+    this.getRelationById()
+  }
+
 
   ngOnInit(): void {
     if (!!this.userIdSS)
