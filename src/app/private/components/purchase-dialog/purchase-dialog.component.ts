@@ -24,11 +24,15 @@ export class PurchaseDialogComponent implements OnInit {
   totalPurchasePrice: number
   userId = '0'
   userIdSS = sessionStorage.getItem('user_id')
-  newRelation: Relation[]
-  cryptosOfUser: DataElement[]
-  matchingCryptos: object
+  cryptosOfUser: Relation[]
+  matchingCryptos: Relation[]
   quantityToPurchase: string
   cryptoToPurchase: DataElement
+  cryptoQuantity: number
+  oldAmount: number[]
+  newAmount: number
+  updatedAmount: number
+
 
   getAllCryptos() {
     this.resultsService.getAllCryptos().subscribe(
@@ -45,13 +49,19 @@ export class PurchaseDialogComponent implements OnInit {
 
   getRelationById() {
     this.resultsService.getRelationById(this.userId).subscribe(
-      (crypto) => {
-        this.cryptosOfUser = crypto
+      (relation) => {
         this.cryptoToPurchase = this.cryptoPurchase.get('crypto')?.value
 
-        this.matchingCryptos = this.cryptosOfUser.filter(element => element.crypto_name === this.cryptoToPurchase.crypto_name)
+        this.matchingCryptos = relation.filter(element => element.crypto_id === this.cryptoToPurchase.crypto_id)
 
-        this.updateRelation()
+        if (!!this.matchingCryptos){
+          this.oldAmount = this.matchingCryptos.map(element => element.amount)
+          this.newAmount = this.cryptoPurchase.get('crypto_quantity')?.value
+
+           this.updatedAmount = this.oldAmount[0] + this.newAmount
+        }
+
+        this.updateRelation(this.updatedAmount)
       },
       (error) => {
         console.log(error)
@@ -59,13 +69,12 @@ export class PurchaseDialogComponent implements OnInit {
     )
   }
 
-  updateRelation() {
+  updateRelation(updatedAmount: number) {
     let cryptoId = this.cryptoPurchase.get('crypto')?.value.crypto_id
-    let cryptoQuantity = this.cryptoPurchase.get('crypto_quantity')?.value
 
-    this.resultsService.updateRelationById(this.userId, cryptoId, cryptoQuantity).subscribe(
+    this.resultsService.updateRelationById(this.userId, cryptoId, updatedAmount).subscribe(
       (relation) => {
-        console.log("prueba amount", relation)
+        console.log("final", relation)
       },
       (error) => {
         console.log(error)

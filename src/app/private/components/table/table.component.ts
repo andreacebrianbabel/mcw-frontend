@@ -10,7 +10,6 @@ export interface DataElement {
   value: number,
   asset: string,
   stock: number;
-  amount: number
 }
 
 const ELEMENT_DATA: DataElement[] = [];

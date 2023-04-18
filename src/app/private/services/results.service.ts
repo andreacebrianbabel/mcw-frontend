@@ -22,13 +22,13 @@ export class ResultsService {
   }
 
   // SERVICIO PARA LOS DATOS DE LA TABLA Y PARA COMPROBAR QUE LA CRIPTOMONEDA QUE SE COMPRA LA TIENE EL USUARIO O NO
-  getRelationById(user_id: string): Observable<DataElement[]> {
-    return this.http.get<DataElement[]>('/api/relation/get/' + user_id)
+  getRelationById(user_id: string): Observable<Relation[]> {
+    return this.http.get<Relation[]>('/api/relation/get/' + user_id)
   }
 
   // SERVICIO PARA ACTUALIZAR EL AMOUNT DE LA TABLA CUANDO EL USUARIO YA TIENE ESA CRYPTOMONEDA
-  updateRelationById(user_id: string, crypto_id: string, amount: number): Observable<Relation[]> {
-    return this.http.patch<Relation[]>('/api/relation/patch/', { user_id, crypto_id, amount })
+  updateRelationById(user_id: string, crypto_id: string, amount: number): Observable<Relation> {
+    return this.http.patch<Relation>('/api/relation/patch/', { user_id, crypto_id, amount })
   }
 
   // SERVICIO PARA CREAR UNA NUEVA ENTRADA EN LA TABLA DE RELATION PARA CREAR LA CRIPTOMONEDA QUE HA COMPRADO EL USUARIO
