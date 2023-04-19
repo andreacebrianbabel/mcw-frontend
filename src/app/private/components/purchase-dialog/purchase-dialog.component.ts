@@ -5,7 +5,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { CryptoData } from '../../models/crypto-model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ResultsService } from '../../services/results.service';
-import { User } from 'src/app/auth/models/user-model';
 
 @Component({
   selector: 'app-purchase-dialog',
@@ -25,15 +24,13 @@ export class PurchaseDialogComponent implements OnInit {
   totalPurchasePrice: number
   userId = '0'
   userIdSS = sessionStorage.getItem('user_id')
-  cryptosOfUser: Relation[]
   matchingCryptos: Relation[]
-  quantityToPurchase: string
   cryptoToPurchase: DataElement
-  cryptoQuantity: number
   oldAmount: number[]
   newAmount: number
   updatedAmount: number
   prohibitionPurchase: boolean = false
+  cryptoStock: number
 
   getAllCryptos() {
     this.resultsService.getAllCryptos().subscribe(
@@ -49,18 +46,23 @@ export class PurchaseDialogComponent implements OnInit {
   getRelationById() {
     this.resultsService.getRelationById(this.userId).subscribe(
       (relation) => {
-        this.cryptoToPurchase = this.cryptoPurchase.get('crypto')?.value
+        this.cryptoToPurchase = this.cryptoPurchase.get('crypto')?.value.crypto_id
 
         this.matchingCryptos = relation.filter(element => element.crypto_id === this.cryptoToPurchase.crypto_id)
 
-        if (!!this.matchingCryptos) {
-          this.oldAmount = this.matchingCryptos.map(element => element.amount)
-          this.newAmount = this.cryptoPurchase.get('crypto_quantity')?.value
+        this.newAmount = this.cryptoPurchase.get('crypto_quantity')?.value
 
-          if (!!this.oldAmount)
-            this.updatedAmount = this.oldAmount[0] + this.newAmount
-          else
-            this.updatedAmount = this.newAmount
+        if (this.matchingCryptos.length > 0) {
+          this.oldAmount = this.matchingCryptos.map(element => element.amount)
+
+          this.updatedAmount = this.oldAmount[0] + this.newAmount
+
+          console.log("holaaaa", this.updatedAmount)
+        } else {
+          this.updatedAmount = this.newAmount
+
+          console.log("adiossssssssss", this.updatedAmount)
+
         }
 
         this.updateRelation(this.updatedAmount)
@@ -76,9 +78,9 @@ export class PurchaseDialogComponent implements OnInit {
 
     this.resultsService.getCryptoById(cryptoId).subscribe(
       (crypto) => {
-        let cryptoStock = Number(crypto.stock)
+        this.cryptoStock = Number(crypto.stock)
 
-        this.updateCryptoStock(cryptoStock)
+        this.updateCryptoStock(this.cryptoStock)
       },
       (error) => {
         console.log(error)
@@ -86,17 +88,17 @@ export class PurchaseDialogComponent implements OnInit {
     )
   }
 
-  getUserById(totalPurchasePrice: number) {
+  getUserById() {
     this.resultsService.getUserById(this.userId).subscribe(
       (user) => {
         let deposit = user.deposit
 
-        if (totalPurchasePrice > deposit) {
+        if (this.totalPurchasePrice > deposit) {
           this.prohibitionPurchase = true
           this.openPurchaseProhibitionBar()
         } else {
           this.prohibitionPurchase = false
-          let newDeposit: number = deposit - totalPurchasePrice
+          let newDeposit: number = Number((deposit - this.totalPurchasePrice).toFixed(3))
           this.updateUserDeposit(user.username, user.fullname, user.email, user.password, newDeposit)
         }
       },
@@ -110,7 +112,8 @@ export class PurchaseDialogComponent implements OnInit {
     let cryptoId = this.cryptoPurchase.get('crypto')?.value.crypto_id
 
     this.resultsService.updateRelationById(this.userId, cryptoId, updatedAmount).subscribe(
-      (relation) => {},
+      (relation) => {
+      },
       (error) => {
         console.log(error)
       }
@@ -126,27 +129,21 @@ export class PurchaseDialogComponent implements OnInit {
     cryptoStock = cryptoStock - stockPurchased
 
     this.resultsService.updateCryptoById(cryptoId, cryptoName, cryptoValue, cryptoAsset, cryptoStock).subscribe(
-      (stock) => {},
+      (stock) => { },
       (error) => {
         console.log(error)
       }
     )
   }
 
-  // ACTUALIZAR EL VALOR DEL DEPOSIT
   updateUserDeposit(username: string, fullname: string, email: string, password: string, newDeposit: number) {
-    console.log("updated deposit", newDeposit)
-
     this.resultsService.updateUserById(this.userId, username, fullname, email, password, newDeposit).subscribe(
-      (deposit) => {
-        console.log("updated deposit", deposit)
-      },
+      (deposit) => { },
       (error) => {
         console.log(error)
       }
     )
   }
-
 
   transactionPurchase() {
     this.getRelationById()
@@ -165,9 +162,17 @@ export class PurchaseDialogComponent implements OnInit {
 
         this.totalPurchasePrice = Number((price! * value).toFixed(3))
 
-        this.getUserById(this.totalPurchasePrice)
+        this.getUserById()
+
+        return this.totalPurchasePrice
       }
     )
+  }
+
+  closePurchaseDialog() {
+    this.getCryptoById()
+    this.getRelationById()
+    window.location.reload()
   }
 
   openPurchaseBar() {
