@@ -1,10 +1,10 @@
+import { DataElement } from './../table/table.component';
 import { Relation } from './../../models/relation-model';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CryptoData } from '../../models/crypto-model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ResultsService } from '../../services/results.service';
-import { DataElement } from '../table/table.component';
 
 @Component({
   selector: 'app-purchase-dialog',
@@ -33,7 +33,6 @@ export class PurchaseDialogComponent implements OnInit {
   newAmount: number
   updatedAmount: number
 
-
   getAllCryptos() {
     this.resultsService.getAllCryptos().subscribe(
       (crypto) => {
@@ -45,8 +44,6 @@ export class PurchaseDialogComponent implements OnInit {
     )
   }
 
-  // Busco las criptomonedas que tiene el usuario y si la criptomoneda de compra coincide con alguna de las que ya tenía
-
   getRelationById() {
     this.resultsService.getRelationById(this.userId).subscribe(
       (relation) => {
@@ -54,14 +51,31 @@ export class PurchaseDialogComponent implements OnInit {
 
         this.matchingCryptos = relation.filter(element => element.crypto_id === this.cryptoToPurchase.crypto_id)
 
-        if (!!this.matchingCryptos){
+        if (!!this.matchingCryptos) {
           this.oldAmount = this.matchingCryptos.map(element => element.amount)
           this.newAmount = this.cryptoPurchase.get('crypto_quantity')?.value
 
-           this.updatedAmount = this.oldAmount[0] + this.newAmount
+          this.updatedAmount = this.oldAmount[0] + this.newAmount
         }
 
         this.updateRelation(this.updatedAmount)
+        this.getCryptoById()
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
+  // TRAER EL STOCK DE LA CRYPTO
+  getCryptoById() {
+    let cryptoId = this.cryptoPurchase.get('crypto')?.value.crypto_id
+
+    this.resultsService.getCryptoById(cryptoId).subscribe(
+      (crypto) => {
+        let cryptoStock = Number(crypto.stock)
+
+        this.updateCryptoStock(cryptoStock)
       },
       (error) => {
         console.log(error)
@@ -74,7 +88,7 @@ export class PurchaseDialogComponent implements OnInit {
 
     this.resultsService.updateRelationById(this.userId, cryptoId, updatedAmount).subscribe(
       (relation) => {
-        console.log("final", relation)
+        console.log("updated relation", relation)
       },
       (error) => {
         console.log(error)
@@ -82,10 +96,33 @@ export class PurchaseDialogComponent implements OnInit {
     )
   }
 
+  // ACTUALIZAR EL VALOR DE LA CRYPTO
+
+  updateCryptoStock(cryptoStock: number) {
+    let cryptoId = this.cryptoPurchase.get('crypto')?.value.crypto_id
+    let cryptoName = this.cryptoPurchase.get('crypto')?.value.crypto_name
+    let cryptoValue = this.cryptoPurchase.get('crypto')?.value.value
+    let cryptoAsset = this.cryptoPurchase.get('crypto')?.value.asset
+    let stockPurchased = this.cryptoPurchase.get('crypto_quantity')?.value
+    cryptoStock = cryptoStock - stockPurchased
+
+    console.log("1", cryptoStock)
+
+    this.resultsService.updateCryptoById(cryptoId, cryptoName, cryptoValue, cryptoAsset, cryptoStock).subscribe(
+      (stock) => {
+        console.log(stock)
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
+
+
   transactionPurchase() {
     this.getRelationById()
   }
-
 
   ngOnInit(): void {
     if (!!this.userIdSS)
