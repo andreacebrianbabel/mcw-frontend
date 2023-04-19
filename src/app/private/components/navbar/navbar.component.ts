@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit {
 
   getFullname = sessionStorage.getItem('username');
   sessionUserId = sessionStorage.getItem('user_id');
-  deposit: string;
+  deposit: number;
 
   getUserDeposit() {
     this.resultService.getUserById(this.sessionUserId!).subscribe(

@@ -17,16 +17,12 @@ export class ResultsService {
     return this.http.get<User>('/api/users/get/' + user_id)
   }
 
+  updateUserById(user_id: string, username: string, password: string, email: string, fullname: string, deposit: number): Observable<User> {
+    return this.http.patch<User>('api/users/patch/', {user_id, username, password, email, fullname, deposit})
+  }
+
   getAllCryptos(): Observable<CryptoData[]> {
     return this.http.get<CryptoData[]>('/api/crypto/all')
-  }
-
-  getRelationById(user_id: string): Observable<Relation[]> {
-    return this.http.get<Relation[]>('/api/relation/get/' + user_id)
-  }
-
-  updateRelationById(user_id: string, crypto_id: string, amount: number): Observable<Relation> {
-    return this.http.patch<Relation>('/api/relation/patch/', {user_id, crypto_id, amount})
   }
 
   getCryptoById(crypto_id: string): Observable<DataElement> {
@@ -37,7 +33,11 @@ export class ResultsService {
     return this.http.patch<CryptoData>('api/crypto/patch/', {crypto_id, crypto_name, value, asset, stock})
   }
 
-  // SERVICIO PARA TRAER EL USUARIO QUE HACE LA COMPRA Y COGER EL DEPOSIT
+  getRelationById(user_id: string): Observable<Relation[]> {
+    return this.http.get<Relation[]>('/api/relation/get/' + user_id)
+  }
 
-  // SERVICIO PARA ACTUALIZAR EL DEPOSIT DEL USUARIO
+  updateRelationById(user_id: string, crypto_id: string, amount: number): Observable<Relation> {
+    return this.http.patch<Relation>('/api/relation/patch/', {user_id, crypto_id, amount})
+  }
 }

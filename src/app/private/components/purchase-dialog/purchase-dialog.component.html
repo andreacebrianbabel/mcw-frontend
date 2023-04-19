@@ -20,6 +20,6 @@
             <p class="text">Total: <span class="text">{{totalPurchasePrice}} €</span></p>
         </div>
 
-        <button type="submit" class="main__btn__style text" (click)="openPurchaseBar()">Comprar</button>
+        <button [disabled]="prohibitionPurchase" type="submit" class="main__btn__style text"  (click)="openPurchaseBar()">Comprar</button>
     </form>
 </mat-dialog-content>

@@ -4,5 +4,5 @@ export interface User {
     password: string,
     email: string,
     fullname: string,
-    deposit: string
+    deposit: number
 }

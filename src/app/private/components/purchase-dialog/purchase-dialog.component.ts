@@ -5,6 +5,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { CryptoData } from '../../models/crypto-model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ResultsService } from '../../services/results.service';
+import { User } from 'src/app/auth/models/user-model';
 
 @Component({
   selector: 'app-purchase-dialog',
@@ -32,6 +33,7 @@ export class PurchaseDialogComponent implements OnInit {
   oldAmount: number[]
   newAmount: number
   updatedAmount: number
+  prohibitionPurchase: boolean = false
 
   getAllCryptos() {
     this.resultsService.getAllCryptos().subscribe(
@@ -55,11 +57,13 @@ export class PurchaseDialogComponent implements OnInit {
           this.oldAmount = this.matchingCryptos.map(element => element.amount)
           this.newAmount = this.cryptoPurchase.get('crypto_quantity')?.value
 
-          this.updatedAmount = this.oldAmount[0] + this.newAmount
+          if (!!this.oldAmount)
+            this.updatedAmount = this.oldAmount[0] + this.newAmount
+          else
+            this.updatedAmount = this.newAmount
         }
 
         this.updateRelation(this.updatedAmount)
-        this.getCryptoById()
       },
       (error) => {
         console.log(error)
@@ -67,7 +71,6 @@ export class PurchaseDialogComponent implements OnInit {
     )
   }
 
-  // TRAER EL STOCK DE LA CRYPTO
   getCryptoById() {
     let cryptoId = this.cryptoPurchase.get('crypto')?.value.crypto_id
 
@@ -83,12 +86,19 @@ export class PurchaseDialogComponent implements OnInit {
     )
   }
 
-  updateRelation(updatedAmount: number) {
-    let cryptoId = this.cryptoPurchase.get('crypto')?.value.crypto_id
+  getUserById(totalPurchasePrice: number) {
+    this.resultsService.getUserById(this.userId).subscribe(
+      (user) => {
+        let deposit = user.deposit
 
-    this.resultsService.updateRelationById(this.userId, cryptoId, updatedAmount).subscribe(
-      (relation) => {
-        console.log("updated relation", relation)
+        if (totalPurchasePrice > deposit) {
+          this.prohibitionPurchase = true
+          this.openPurchaseProhibitionBar()
+        } else {
+          this.prohibitionPurchase = false
+          let newDeposit: number = deposit - totalPurchasePrice
+          this.updateUserDeposit(user.username, user.fullname, user.email, user.password, newDeposit)
+        }
       },
       (error) => {
         console.log(error)
@@ -96,7 +106,16 @@ export class PurchaseDialogComponent implements OnInit {
     )
   }
 
-  // ACTUALIZAR EL VALOR DE LA CRYPTO
+  updateRelation(updatedAmount: number) {
+    let cryptoId = this.cryptoPurchase.get('crypto')?.value.crypto_id
+
+    this.resultsService.updateRelationById(this.userId, cryptoId, updatedAmount).subscribe(
+      (relation) => {},
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
 
   updateCryptoStock(cryptoStock: number) {
     let cryptoId = this.cryptoPurchase.get('crypto')?.value.crypto_id
@@ -106,18 +125,27 @@ export class PurchaseDialogComponent implements OnInit {
     let stockPurchased = this.cryptoPurchase.get('crypto_quantity')?.value
     cryptoStock = cryptoStock - stockPurchased
 
-    console.log("1", cryptoStock)
-
     this.resultsService.updateCryptoById(cryptoId, cryptoName, cryptoValue, cryptoAsset, cryptoStock).subscribe(
-      (stock) => {
-        console.log(stock)
-      },
+      (stock) => {},
       (error) => {
         console.log(error)
       }
     )
   }
 
+  // ACTUALIZAR EL VALOR DEL DEPOSIT
+  updateUserDeposit(username: string, fullname: string, email: string, password: string, newDeposit: number) {
+    console.log("updated deposit", newDeposit)
+
+    this.resultsService.updateUserById(this.userId, username, fullname, email, password, newDeposit).subscribe(
+      (deposit) => {
+        console.log("updated deposit", deposit)
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
 
 
   transactionPurchase() {
@@ -127,6 +155,7 @@ export class PurchaseDialogComponent implements OnInit {
   ngOnInit(): void {
     if (!!this.userIdSS)
       this.userId = this.userIdSS
+
     this.getAllCryptos()
 
     this.cryptoPurchase.get('crypto_quantity')?.valueChanges.subscribe(
@@ -135,6 +164,8 @@ export class PurchaseDialogComponent implements OnInit {
         const price = this.cryptos.find(element => element.crypto_id === cryptoType)?.value
 
         this.totalPurchasePrice = Number((price! * value).toFixed(3))
+
+        this.getUserById(this.totalPurchasePrice)
       }
     )
   }
@@ -142,6 +173,12 @@ export class PurchaseDialogComponent implements OnInit {
   openPurchaseBar() {
     this.snackbar.open('¡La compra se ha realizado exitosamente!', '', {
       duration: 2500
+    })
+  }
+
+  openPurchaseProhibitionBar() {
+    this.snackbar.open('El importe total no puede superar tu saldo', '', {
+      duration: 1500
     })
   }
 }
