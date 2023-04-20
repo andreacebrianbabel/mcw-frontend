@@ -94,3 +94,9 @@ $white__text: #ffffff;
     font-size: x-large;
     color: $beige__color;
 }
+
+.mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    background: $beige__color;
+    opacity: 0.8;
+    border-radius: 10px 25px 10px 25px;
+}
