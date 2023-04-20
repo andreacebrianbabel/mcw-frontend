@@ -24,6 +24,6 @@
             <p class="text red__color">Total: <span class="text">{{totalSalePrice}} €</span></p>
         </div>
 
-        <button type="submit" class="sales__btn__style text" (click)="openSaleBar()">Vender</button>
+        <button [disabled]="prohibitionSale" type="submit" class="sales__btn__style text" (click)="openSaleBar()">Vender</button>
     </form>
 </mat-dialog-content>

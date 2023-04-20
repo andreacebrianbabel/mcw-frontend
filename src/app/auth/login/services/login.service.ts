@@ -19,7 +19,6 @@ export class LoginService {
   }
 
   logout() {
-    console.log('logout')
     return sessionStorage.removeItem('fullname')
   }
 }

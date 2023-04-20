@@ -17,7 +17,6 @@ export class ResultsComponent implements OnInit {
   userIdSS = sessionStorage.getItem('user_id')
 
   ngOnInit(): void {
-    console.log(this.userId)
     if (!!this.userIdSS)
       this.userId = this.userIdSS
   }

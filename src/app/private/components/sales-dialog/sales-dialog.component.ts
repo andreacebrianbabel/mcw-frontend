@@ -36,7 +36,7 @@ export class SalesDialogComponent implements OnInit {
     this.resultsService.getAllCryptos().subscribe(
       (crypto) => {
         this.cryptos = crypto
-        
+
       },
       (error) => {
         console.log(error)
@@ -54,19 +54,28 @@ export class SalesDialogComponent implements OnInit {
         this.matchingCryptos = relation.filter(element => element.crypto_id === this.cryptoToSale.crypto_id)
 
         this.newAmount = this.cryptoSale.get('crypto_quantity')?.value
+        this.oldAmount = this.matchingCryptos.map(element => element.amount)
 
         if (this.matchingCryptos.length > 0) {
-          this.oldAmount = this.matchingCryptos.map(element => element.amount)
-
-          console.log("old", this.oldAmount)
-          console.log("nuevo", this.newAmount)
-          this.updatedAmount = this.oldAmount[0] - this.newAmount 
+          this.updatedAmount = this.oldAmount[0] - this.newAmount
         } else {
           this.updatedAmount = this.newAmount
         }
 
-        console.log("vendiendo", this.updatedAmount)
-        this.updateRelation(this.updatedAmount)
+        if (this.newAmount > relation[0].amount) {
+          this.prohibitionSale = true
+          this.openSaleProhibitionBar()
+        } else {
+          this.prohibitionSale = false
+        }
+
+
+        if (this.updatedAmount > 0) {
+          this.updateRelation(this.updatedAmount)
+        } else if(this.updatedAmount == 0){
+          console.log(this.updatedAmount)
+          this.deleteRelation()
+        }
       },
       (error) => {
         console.log(error)
@@ -94,13 +103,8 @@ export class SalesDialogComponent implements OnInit {
       (user) => {
         let deposit = user.deposit
 
-        if (this.totalSalePrice > deposit) {
-          this.prohibitionSale = true
-        } else {
-          this.prohibitionSale = false
-          let newDeposit: number = Number((deposit + this.totalSalePrice).toFixed(4))
-          this.updateUserDeposit(user.username, user.fullname, user.email, user.password, newDeposit)
-        }
+        let newDeposit: number = Number((deposit + this.totalSalePrice).toFixed(4))
+        this.updateUserDeposit(user.username, user.fullname, user.email, user.password, newDeposit)
       },
       (error) => {
         console.log(error)
@@ -112,7 +116,17 @@ export class SalesDialogComponent implements OnInit {
     let cryptoId = this.cryptoSale.get('crypto')?.value.crypto_id
 
     this.resultsService.updateRelationById(this.userId, cryptoId, updatedAmount).subscribe(
-      (relation) => {
+      (relation) => { },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
+  deleteRelation() {
+    let cryptoId = this.cryptoSale.get('crypto')?.value.crypto_id
+    this.resultsService.deleteRelationById(this.userId, cryptoId).subscribe(
+      (result) => {
       },
       (error) => {
         console.log(error)
@@ -178,6 +192,12 @@ export class SalesDialogComponent implements OnInit {
   openSaleBar() {
     this.snackbar.open('¡La venta se ha realizado exitosamente!', '', {
       duration: 2500
+    })
+  }
+
+  openSaleProhibitionBar() {
+    this.snackbar.open('No puedes vender más unidades de las que tienes', '', {
+      duration: 1500
     })
   }
 }

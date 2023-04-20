@@ -35,3 +35,12 @@
     justify-content: center;
     gap: 100px;
 }
+
+@media (min-width: 320px) and (max-width: 768px) {
+    .main__dashboard__btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}

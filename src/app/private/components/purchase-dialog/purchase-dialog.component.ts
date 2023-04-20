@@ -50,8 +50,6 @@ export class PurchaseDialogComponent implements OnInit {
 
         this.matchingCryptos = relation.filter(element => element.crypto_id === this.cryptoToPurchase.crypto_id)
 
-        console.log("prueba0", this.matchingCryptos)
-
         this.newAmount = this.cryptoPurchase.get('crypto_quantity')?.value
 
         if (this.matchingCryptos.length > 0) {
@@ -59,16 +57,9 @@ export class PurchaseDialogComponent implements OnInit {
 
           this.updatedAmount = this.oldAmount[0] + this.newAmount
 
-
-          console.log("1", this.oldAmount[0])
-          console.log("2", this.newAmount)
-
-
         } else {
           this.updatedAmount = this.newAmount
         }
-        console.log("comprando", this.updatedAmount)
-
         this.updateRelation(this.updatedAmount)
       },
       (error) => {

@@ -18,7 +18,7 @@ export class ResultsService {
   }
 
   updateUserById(user_id: string, username: string, password: string, email: string, fullname: string, deposit: number): Observable<User> {
-    return this.http.patch<User>('api/users/patch/', {user_id, username, password, email, fullname, deposit})
+    return this.http.patch<User>('api/users/patch/', { user_id, username, password, email, fullname, deposit })
   }
 
   getAllCryptos(): Observable<CryptoData[]> {
@@ -30,7 +30,7 @@ export class ResultsService {
   }
 
   updateCryptoById(crypto_id: string, crypto_name: string, value: number, asset: string, stock: number): Observable<CryptoData> {
-    return this.http.patch<CryptoData>('api/crypto/patch/', {crypto_id, crypto_name, value, asset, stock})
+    return this.http.patch<CryptoData>('api/crypto/patch/', { crypto_id, crypto_name, value, asset, stock })
   }
 
   getRelationById(user_id: string): Observable<Relation[]> {
@@ -38,6 +38,10 @@ export class ResultsService {
   }
 
   updateRelationById(user_id: string, crypto_id: string, amount: number): Observable<Relation> {
-    return this.http.patch<Relation>('/api/relation/patch/', {user_id, crypto_id, amount})
+    return this.http.patch<Relation>('/api/relation/patch/', { user_id, crypto_id, amount })
+  }
+
+  deleteRelationById(user_id: string, crypto_id: string): Observable<Relation> {
+    return this.http.delete<Relation>('/api/relation/delete/' + user_id + "/" + crypto_id)
   }
 }
