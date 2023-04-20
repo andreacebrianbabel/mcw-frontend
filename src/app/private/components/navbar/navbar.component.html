@@ -2,18 +2,17 @@
     <mat-toolbar class="navbar">
         <div>
             <a href="#">
-                <img src="../../../../assets/media/logo-wallet.png" class="logo__navbar">
+                <i class="fa-solid fa-money-bill-transfer logo"></i>
             </a>
         </div>
 
         <div class="user__money">
-            <img src="../../../../assets/media/user-money.png" class="icon__money">
+            <i class="fa-solid fa-coins icon"></i>
             <p class="text">Saldo disponible: <span [(ngModel)]='deposit' ngDefaultControl>{{deposit}} €</span></p>
         </div>
 
         <div class="user__profile">
-            <img src="../../../../assets/media/user-icon.svg" class="icon__user">
-            <p class="text">Hola, <span [(ngModel)]='getFullname' ngDefaultControl>{{getFullname}}</span></p>
+            <i class="fa-solid fa-user-tie icon"></i>            <p class="text">Hola, <span [(ngModel)]='getFullname' ngDefaultControl>{{getFullname}}</span></p>
             <a (click)="logOut()" class="logout__icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
         </div>
 

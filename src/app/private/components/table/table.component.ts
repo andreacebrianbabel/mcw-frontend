@@ -1,6 +1,6 @@
 import { MatSortModule } from '@angular/material/sort';
 import { Component, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ResultsService } from '../../services/results.service';
 
@@ -26,6 +26,8 @@ export class TableComponent {
   constructor(private resultsService: ResultsService) { }
 
   dataSource = new MatTableDataSource<DataElement>(ELEMENT_DATA);
+  customPaginatorIntl = new MatPaginatorIntl();
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSortModule) matsort!: MatSortModule
@@ -52,8 +54,8 @@ export class TableComponent {
     this.chargeTableData(user_id!)
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    applyFilter(event: Event) {
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
-}

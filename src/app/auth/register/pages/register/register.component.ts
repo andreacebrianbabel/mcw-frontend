@@ -54,8 +54,13 @@ export class RegisterComponent implements OnInit {
 
         this.emailCoincidence = this.registeredEmail.find(element => element === this.registerForm.get('email')?.value)
 
-        if (!!this.emailCoincidence)
+        if (!!this.emailCoincidence) {
           this.userExist = true
+          this.openUserCoincidenceBar()
+        }
+        else {
+          this.newUser()
+        }
       },
       (error) => {
         console.log(error)
@@ -72,12 +77,7 @@ export class RegisterComponent implements OnInit {
   }
 
   newUser() {
-    this.userRegistered()
-    if (this.userExist == true) {
-
-      this.openUserCoincidenceBar()
-
-    } else if (this.registerForm.valid) {
+    if (this.registerForm.valid) {
       this.registerService.addNewUser(this.registerForm.value).subscribe(
         (user) => {
           this.openRegisterBar()

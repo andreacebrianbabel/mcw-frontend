@@ -1,5 +1,7 @@
 <mat-dialog-content class="mat-typography">
-    <button mat-dialog-close (click)="closePurchaseDialog()"><i class="fa-sharp fa-solid fa-xmark"></i></button>
+    <button mat-dialog-close (click)="closePurchaseDialog()" class="close__transaction__btn">
+        <i class="fa-sharp fa-solid fa-xmark transaction__icon"></i>
+    </button>
 
     <p class="text transaction__title">¡COMPRA CRIPTOMONEDAS!</p>
 
@@ -15,11 +17,12 @@
 
         <mat-form-field appearance="fill">
             <mat-label class="text">Cantidad</mat-label>
-            <input matInput type="number" min="0" step="0.001" formControlName="crypto_quantity" class="form-control" required>
+            <input matInput type="number" min="0" step="0.001" formControlName="crypto_quantity" class="form-control"
+                required>
         </mat-form-field>
 
         <div>
-            <p class="text">Total: <span class="text">{{totalPurchasePrice}} €</span></p>
+            <p class="text red__color">Total: <span class="text">{{totalPurchasePrice}} €</span></p>
         </div>
 
         <button [disabled]="prohibitionPurchase" type="submit" class="main__btn__style text"

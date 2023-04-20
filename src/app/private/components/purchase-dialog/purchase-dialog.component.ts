@@ -46,9 +46,11 @@ export class PurchaseDialogComponent implements OnInit {
   getRelationById() {
     this.resultsService.getRelationById(this.userId).subscribe(
       (relation) => {
-        this.cryptoToPurchase = this.cryptoPurchase.get('crypto')?.value.crypto_id
+        this.cryptoToPurchase = this.cryptoPurchase.get('crypto')?.value
 
         this.matchingCryptos = relation.filter(element => element.crypto_id === this.cryptoToPurchase.crypto_id)
+
+        console.log("prueba0", this.matchingCryptos)
 
         this.newAmount = this.cryptoPurchase.get('crypto_quantity')?.value
 
@@ -57,13 +59,15 @@ export class PurchaseDialogComponent implements OnInit {
 
           this.updatedAmount = this.oldAmount[0] + this.newAmount
 
-          console.log("holaaaa", this.updatedAmount)
+
+          console.log("1", this.oldAmount[0])
+          console.log("2", this.newAmount)
+
+
         } else {
           this.updatedAmount = this.newAmount
-
-          console.log("adiossssssssss", this.updatedAmount)
-
         }
+        console.log("comprando", this.updatedAmount)
 
         this.updateRelation(this.updatedAmount)
       },
@@ -98,7 +102,7 @@ export class PurchaseDialogComponent implements OnInit {
           this.openPurchaseProhibitionBar()
         } else {
           this.prohibitionPurchase = false
-          let newDeposit: number = Number((deposit - this.totalPurchasePrice).toFixed(3))
+          let newDeposit: number = Number((deposit - this.totalPurchasePrice).toFixed(4))
           this.updateUserDeposit(user.username, user.fullname, user.email, user.password, newDeposit)
         }
       },
@@ -160,7 +164,7 @@ export class PurchaseDialogComponent implements OnInit {
         const cryptoType = this.cryptoPurchase.get('crypto')?.value.crypto_id
         const price = this.cryptos.find(element => element.crypto_id === cryptoType)?.value
 
-        this.totalPurchasePrice = Number((price! * value).toFixed(3))
+        this.totalPurchasePrice = Number((price! * value).toFixed(4))
 
         this.getUserById()
 
@@ -170,9 +174,9 @@ export class PurchaseDialogComponent implements OnInit {
   }
 
   closePurchaseDialog() {
+    window.location.reload()
     this.getCryptoById()
     this.getRelationById()
-    window.location.reload()
   }
 
   openPurchaseBar() {

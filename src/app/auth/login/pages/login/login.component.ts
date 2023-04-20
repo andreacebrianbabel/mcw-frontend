@@ -24,12 +24,14 @@ export class LoginComponent implements OnInit {
     this.loginService.getUserLog(this.loginForm.value).subscribe(
       (user) => {
         this.userLog = user;
+        console.log("user", user)
 
         if (!this.userLog) {
           this.openLoginBar()
-
+          console.log("1",this.userLog)
         }
         else {
+          console.log("2",this.userLog)
           sessionStorage.setItem('username', this.loginForm.get('username')?.value)
           sessionStorage.setItem('user_id', this.userLog.user_id)
           this.redirection(this.userLog)

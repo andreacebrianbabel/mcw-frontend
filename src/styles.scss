@@ -1,5 +1,7 @@
-$blue__color: #6b7fd7;
-$text: "Boba Cups.ttf";
+$red__color: #ec0000;
+$beige__color: #dfbe99;
+$text: "Leorio.ttf";
+$white__text: #ffffff;
 
 *body {
     margin: 0;
@@ -8,13 +10,27 @@ $text: "Boba Cups.ttf";
 @import '~@fortawesome/fontawesome-free/css/all.css';
 
 @font-face {
-    font-family: "Boba Cups.ttf";
-    src: url('./assets/fonts/Boba\ Cups.ttf');
+    font-family: "Leorio.ttf";
+    src: url('./assets/fonts/Leorio.ttf');
+}
+
+.red__color {
+    color: $red__color;
+}
+
+.beige__color {
+    color: $beige__color;
+}
+
+.logo {
+    color: $red__color;
+    font-style: italic;
+    font-size: xx-large;
 }
 
 .main__btn__style {
     background-color: transparent;
-    border-color: $blue__color;
+    border-color: $red__color;
     border-width: 3px;
     border-radius: 15px;
     padding: 16px;
@@ -23,24 +39,27 @@ $text: "Boba Cups.ttf";
 }
 
 .main__btn__style:hover {
-    background-color: #6b7fd7 ;
+    background-color: $red__color ;
     opacity: 0.8;
+    color: $white__text;
 }
 
 .text {
     font-family: $text;
     font-size: medium;
+    font-weight: bolder;
 }
 
 .text__error {
     color: red;
 }
+
 .transaction__form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 24px;
+    gap: 20px;
 }
 
 .transaction__title {
@@ -49,7 +68,7 @@ $text: "Boba Cups.ttf";
 
 .sales__btn__style {
     background-color: transparent;
-    border-color: #F4B639 !important;
+    border-color: $beige__color !important;
     border-width: 3px;
     border-radius: 15px;
     padding: 16px;
@@ -58,6 +77,20 @@ $text: "Boba Cups.ttf";
 }
 
 .sales__btn__style:hover {
-    background-color: #F4B639 ;
+    background-color: $beige__color ;
     opacity: 0.8;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+    background: $beige__color;
+    border-radius: 15px 50px 15px 50px !important;
+}
+
+.mat-form-field-underline {
+    display: none !important;
+}
+
+.transaction__icon {
+    font-size: x-large;
+    color: $beige__color;
 }

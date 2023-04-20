@@ -1,6 +1,5 @@
 ::ng-deep .mat-dialog-container {
-    background-color: #d85e87;
-    // opacity: 0.9;
+    background: radial-gradient(circle, rgba(255,255,255,1) 25%, rgba(223,190,153,1) 100%);
     border-radius: 339px;
     height: 565px;
     width: 589px;
@@ -9,4 +8,18 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.transaction__title {
+    color: #ec0000;
+    font-size: large;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.close__transaction__btn {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    cursor: pointer;
+    margin-left: 84px;
 }

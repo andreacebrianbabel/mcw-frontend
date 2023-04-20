@@ -1,7 +1,11 @@
 <mat-dialog-content class="mat-typography">
+    <button mat-dialog-close (click)="closeSaleDialog()" class="close__transaction__btn">
+        <i class="fa-sharp fa-solid fa-xmark transaction__icon"></i>
+    </button>
+
     <p class="text transaction__title">¡VENDE TUS CRIPTOMONEDAS!</p>
 
-    <form autocomplete="off" [formGroup]="cryptoSale" class="transaction__form">
+    <form autocomplete="off" [formGroup]="cryptoSale" (ngSubmit)="transactionSale()" class="transaction__form">
         <mat-form-field appearance="fill">
             <mat-label class="text">Elige una criptomoneda</mat-label>
             <mat-select formControlName="crypto" required>
@@ -17,7 +21,7 @@
         </mat-form-field>
 
         <div>
-            <p class="text">Total: <span class="text">{{totalSalePrice}} €</span></p>
+            <p class="text red__color">Total: <span class="text">{{totalSalePrice}} €</span></p>
         </div>
 
         <button type="submit" class="sales__btn__style text" (click)="openSaleBar()">Vender</button>

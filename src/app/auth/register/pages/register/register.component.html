@@ -1,11 +1,11 @@
 <div class="register__distribution">
     <div>
         <div class="main__info">
-            <img src="../../../../assets/media/logo-wallet.png" class="logo__wallet">
+            <i class="fa-solid fa-money-bill-transfer logo"></i>
             <p class="main__title text">My crypto wallet</p>
         </div>
 
-        <form autocomplete="off" [formGroup]="registerForm" (ngSubmit)="newUser()" class="register__form">
+        <form autocomplete="off" [formGroup]="registerForm" (ngSubmit)="userRegistered()" class="register__form">
             <mat-form-field appearance="fill">
                 <mat-label class="text">Nombre de usuario</mat-label>
                 <input matInput type="text" formControlName="username" class="form-control"

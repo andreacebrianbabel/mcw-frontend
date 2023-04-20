@@ -1,6 +1,6 @@
 .main__page__distribution {
     height: 100vh;
-    background-image: url("../../../../assets/media/background-dashboard.png");
+    background-image: url("../../../../assets/media/background-main.png");
     background-repeat: no-repeat, repeat;
     background-position: center;
     background-size: cover;
@@ -10,8 +10,8 @@
     align-items: center;
 }
 
-.main__page__distribution div {
-    margin-left: 13%;
+.main__page__distribution p {
+    width: 41%;
 }
 
 .main__info {
